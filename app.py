@@ -137,6 +137,7 @@ elif page == "Trade Statistics":
         with col4:
             total_stocks = positions['Ticker'].nunique()
             st.metric("Stocks Analyzed", total_stocks)
+            period = "5y"
             st.metric("Analysis Period", period)
 
         # Portfolio allocation pie chart
