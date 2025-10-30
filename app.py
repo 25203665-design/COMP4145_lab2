@@ -248,7 +248,7 @@ elif page == "Backtesting Module":
     # Display current selection
     if backtest_tickers:
         st.success(f"**Selected Stocks ({len(backtest_tickers)})**: {', '.join(backtest_tickers)}")
-    
+
     # Initialize session state for backtest parameters before widgets
     if 'backtest_ma_short' not in st.session_state:
         st.session_state.backtest_ma_short = 50
@@ -260,21 +260,6 @@ elif page == "Backtesting Module":
         st.session_state.backtest_stop_loss = 10.0
     if 'backtest_take_profit' not in st.session_state:
         st.session_state.backtest_take_profit = 15.0
-
-    # Strategy parameters
-    st.subheader("Strategy Parameters")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        ma_short = st.number_input("Short Moving Average Window", min_value=5, max_value=100, value=st.session_state.backtest_ma_short, key="backtest_ma_short")
-        ma_long = st.number_input("Long Moving Average Window", min_value=20, max_value=300, value=st.session_state.backtest_ma_long, key="backtest_ma_long")
-        holding_period = st.number_input("Max Holding Period (days)", min_value=5, max_value=180, value=st.session_state.backtest_holding, key="backtest_holding")
-
-    with col2:
-        stop_loss_pct = st.number_input("Stop-Loss (%)", min_value=1.0, max_value=50.0, value=st.session_state.backtest_stop_loss, key="backtest_stop_loss")
-        take_profit_pct = st.number_input("Take-Profit (%)", min_value=1.0, max_value=100.0, value=st.session_state.backtest_take_profit, key="backtest_take_profit")
-        period_backtest = st.selectbox("Data Period", ["6mo", "1y", "2y", "5y", "max"], index=3, key="backtest_period")
 
     # Strategy parameter presets
     st.subheader("Quick Strategy Presets")
@@ -316,6 +301,21 @@ elif page == "Backtesting Module":
             st.session_state.backtest_stop_loss = 15.0
             st.session_state.backtest_take_profit = 25.0
             st.rerun()
+
+    # Strategy parameters
+    st.subheader("Strategy Parameters")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        ma_short = st.number_input("Short Moving Average Window", min_value=5, max_value=100, value=st.session_state.backtest_ma_short, key="backtest_ma_short")
+        ma_long = st.number_input("Long Moving Average Window", min_value=20, max_value=300, value=st.session_state.backtest_ma_long, key="backtest_ma_long")
+        holding_period = st.number_input("Max Holding Period (days)", min_value=5, max_value=180, value=st.session_state.backtest_holding, key="backtest_holding")
+
+    with col2:
+        stop_loss_pct = st.number_input("Stop-Loss (%)", min_value=1.0, max_value=50.0, value=st.session_state.backtest_stop_loss, key="backtest_stop_loss")
+        take_profit_pct = st.number_input("Take-Profit (%)", min_value=1.0, max_value=100.0, value=st.session_state.backtest_take_profit, key="backtest_take_profit")
+        period_backtest = st.selectbox("Data Period", ["6mo", "1y", "2y", "5y", "max"], index=3, key="backtest_period")
 
     # Complete Backtesting function
     def run_custom_strategy(tickers, ma_short, ma_long, holding_period, stop_loss_pct, take_profit_pct, period="5y"):
